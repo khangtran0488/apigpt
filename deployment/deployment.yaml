@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: gptbot
-          image: harbor.local/guru/gptbot:202503240512
+          image: harbor.local/guru/gptbot:202503240524
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
