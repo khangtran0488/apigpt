@@ -1,23 +1,17 @@
-import express from "express";
-import axios from "axios";
+const express = require("express");
+const axios = require("axios");
 
 const app = express();
 app.use(express.json());
-console.log("🔐 OPENAI_API_KEY =", process.env.OPENAI_API_KEY);
-// Log request path để debug
+//console.log("🔐 OPENAI_API_KEY =", process.env.OPENAI_API_KEY);
+const API_KEY = process.env.OPENAI_API_KEY;
 app.use((req, res, next) => {
   console.log("🔹 Incoming request:", req.method, req.url);
   next();
 });
 
-// Middleware để strip prefix (nếu cần)
-app.use("/9810132973210311111110032103121115", (req, res, next) => {
-  req.url = req.url.replace(/^\/9810132973210311111110032103121115/, "");
-  next();
-});
-
 // Route gốc
-app.post("/ask-gpt", async (req, res) => {
+app.post("/9810132973210311111110032103121115/ask-gpt", async (req, res) => {
   const { prompt } = req.body;
   if (!prompt) return res.status(400).json({ error: "Prompt is required" });
 
@@ -31,7 +25,7 @@ app.post("/ask-gpt", async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          Authorization: `Bearer ${API_KEY}`,
           "Content-Type": "application/json",
         },
       }
@@ -45,4 +39,4 @@ app.post("/ask-gpt", async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("✅ GPT API server running on port 3000"));
+app.listen(3005, () => console.log("✅ GPT API server running on port 3000"));
