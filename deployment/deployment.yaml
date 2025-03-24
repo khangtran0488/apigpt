@@ -25,7 +25,7 @@ spec:
           image: harbor.local/guru/gptbot:202503240527
           imagePullPolicy: Always
           ports:
-            - containerPort: 3000
+            - containerPort: 3005
           env:
             - name: OPENAI_API_KEY
               valueFrom:
