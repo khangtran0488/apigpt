@@ -1,6 +1,6 @@
-const express = require("express");
-const axios = require("axios");
-
+import express from "express";
+import axios from "axios";
+const VALID_TOKEN = "gpt-secret-12345";
 const app = express();
 app.use(express.json());
 //console.log("🔐 OPENAI_API_KEY =", process.env.OPENAI_API_KEY);
@@ -12,8 +12,16 @@ app.use((req, res, next) => {
 
 // Route gốc
 app.post("/9810132973210311111110032103121115/ask-gpt", async (req, res) => {
-  const { prompt } = req.body;
-  if (!prompt) return res.status(400).json({ error: "Prompt is required" });
+  const { prompt, token } = req.body;
+
+  // Kiểm tra token
+  if (token !== VALID_TOKEN) {
+    return res.status(401).json({ error: "Unauthorized: Invalid token" });
+  }
+
+  if (!prompt) {
+    return res.status(400).json({ error: "Prompt is required" });
+  }
 
   try {
     const response = await axios.post(
@@ -25,11 +33,12 @@ app.post("/9810132973210311111110032103121115/ask-gpt", async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${API_KEY}`,
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
           "Content-Type": "application/json",
         },
       }
     );
+
     res.json({ reply: response.data.choices[0].message.content });
   } catch (error) {
     res.status(500).json({
