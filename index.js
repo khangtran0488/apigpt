@@ -6,7 +6,7 @@ app.use(express.json());
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-app.post("/ask-gpt", async (req, res) => {
+app.post("/9810132973210311111110032103121115", async (req, res) => {
   const { prompt } = req.body;
   if (!prompt) return res.status(400).json({ error: "Prompt is required" });
 
