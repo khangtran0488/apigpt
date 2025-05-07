@@ -4,3 +4,4 @@ dist/
 .vite/
 client/node_modules/
 package-lock.json
+.env
